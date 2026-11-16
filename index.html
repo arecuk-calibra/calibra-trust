@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calibra Trust Center</title>
+<meta name="description" content="How Calibra protects laboratories' records: controls with their proof, standards, subprocessors and every release with its notes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* The trust center's look (docs/operations/trust-center.md): the Calibra website's system (teal,
+   Mona Sans, dark hero), light and dark. Inlined into the page by tools/trust/trust_page.py. */
+:root {
+  --primary: #00786F; --light: #92D8D8; --text: #0F1C1C; --muted: #385353; --tint: #F3F8F8;
+  --border: #D6E5E5; --page: #FFFFFF; --dark: #0F1C1C; --dark-panel: #243737;
+  --on-dark: #FFFFFF; --on-dark-muted: #B9D2D2;
+  --ok: #2F9E5B; --ok-bg: #E7F5EC; --prog: #B86E12; --prog-bg: #FBF0E1; --info: #1F6FA8; --info-bg: #E6F0F8;
+  --banner: #FFF4D6; --banner-text: #5A4300;
+  --font: "Mona Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --primary: #4FBDB2; --text: #E4EFEF; --muted: #A7C1C1; --tint: #152424; --border: #2A4141; --page: #0F1C1C;
+    --dark: #0A1414; --dark-panel: #1E3131; --ok: #4CC07A; --ok-bg: #173826; --prog: #E39A3E; --prog-bg: #3A2A14;
+    --info: #6FB2E6; --info-bg: #142B3D; --banner: #3A3016; --banner-text: #F5E2A8; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --primary: #4FBDB2; --text: #E4EFEF; --muted: #A7C1C1; --tint: #152424; --border: #2A4141; --page: #0F1C1C;
+  --dark: #0A1414; --dark-panel: #1E3131; --ok: #4CC07A; --ok-bg: #173826; --prog: #E39A3E; --prog-bg: #3A2A14;
+  --info: #6FB2E6; --info-bg: #142B3D; --banner: #3A3016; --banner-text: #F5E2A8; color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--page); color: var(--text); font: 400 16px/1.6 var(--font); -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { margin: 0; font-weight: 650; text-wrap: balance; }
+h2 { font-size: clamp(24px, 2.6vw, 32px); line-height: 1.15; letter-spacing: -0.02em; }
+h3 { font-size: 16px; line-height: 1.3; }
+p { margin: 0; }
+a { color: var(--primary); }
+:focus-visible { outline: 3px solid var(--light); outline-offset: 2px; }
+.wrap { max-width: 1200px; margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+@media (min-width: 760px) { .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); } }
+.eyebrow { margin-bottom: 8px; color: var(--primary); font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.lead { color: var(--muted); max-width: 46em; margin-top: 8px; font-size: 15.5px; }
+
+.banner { background: var(--banner); color: var(--banner-text); font-size: 14px; }
+.banner .wrap { padding-block: 9px; }
+.tbc { font-size: 12px; font-weight: 600; color: var(--prog); white-space: nowrap; }
+
+/* top bar + hero */
+.top { background: var(--dark); color: var(--on-dark); }
+.top-bar { display: flex; align-items: center; gap: 16px; min-height: 60px; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--on-dark); text-decoration: none; font-weight: 700; font-size: 18px; }
+.brand-mark { width: 22px; height: 22px; border-radius: 6px; background: conic-gradient(from 200deg, #92D8D8, #00786F, #92D8D8); }
+.brand small { font-weight: 500; color: var(--on-dark-muted); font-size: 15px; }
+.top-bar .btn { margin-left: auto; }
+.btn { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 8px 16px; border-radius: 8px; font: 600 15px var(--font); text-decoration: none; border: 1px solid transparent; cursor: pointer; }
+.btn--primary { background: #00786F; color: #fff; }
+.btn--primary:hover { background: #00665e; }
+.btn--ghost { border-color: var(--border); color: var(--text); background: transparent; }
+.hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 40px; padding-block: 28px 36px; align-items: center; }
+.hero h1 { font-size: clamp(28px, 3.3vw, 42px); line-height: 1.08; letter-spacing: -0.03em; }
+.hero h1 span { color: #92D8D8; }
+.hero p.body { margin-top: 14px; color: var(--on-dark-muted); max-width: 36em; }
+.proof-strip { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; color: #DDEDED; }
+.proof-strip span::before { content: "\2713"; color: #92D8D8; font-weight: 700; margin-right: 6px; }
+.verified { background: var(--dark-panel); border: 1px solid rgba(146,216,216,.2); border-radius: 12px; padding: 20px; min-width: 0; }
+.verified .lbl { color: var(--on-dark-muted); font-size: 13px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.verified .rel { font-size: 26px; font-weight: 650; letter-spacing: -.02em; color: #92D8D8; margin-top: 2px; font-variant-numeric: tabular-nums; }
+.verified ul { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 4px; font-size: 14px; color: var(--on-dark); }
+.verified li::before { content: "\2713"; color: #92D8D8; font-weight: 700; margin-right: 8px; }
+.verified .foot { margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(146,216,216,.15); font-size: 13px; color: var(--on-dark-muted); }
+
+/* standards strip */
+.stdstrip { background: var(--tint); border-bottom: 1px solid var(--border); }
+.standards { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; padding-block: 18px; }
+.std { background: var(--page); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; min-width: 0; }
+.std h3 { font-size: 15px; }
+.std p { color: var(--muted); font-size: 13.5px; line-height: 1.45; margin-top: 6px; }
+.badge { display: inline-block; margin-top: 6px; font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; white-space: nowrap; }
+.b-prog { background: var(--prog-bg); color: var(--prog); }
+.b-ok { background: var(--ok-bg); color: var(--ok); }
+.b-info { background: var(--info-bg); color: var(--info); }
+
+/* sticky section bar */
+.secnav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--page); border-bottom: 1px solid var(--border); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--page); }
+.secnav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.secnav a { display: block; padding: 13px 12px; color: var(--muted); text-decoration: none; font-size: 15px; font-weight: 500; white-space: nowrap; border-bottom: 2px solid transparent; }
+.secnav a:hover { color: var(--text); border-bottom-color: var(--light); }
+section { scroll-margin-top: 56px; }
+.sec { padding-block: 44px; }
+.sec--tint { background: var(--tint); }
+.sec-head { margin-bottom: 22px; display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; }
+
+/* controls: compact areas */
+.areas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.area { border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; min-width: 0; background: var(--page); }
+.area h3 { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.area h3 small { color: var(--muted); font-weight: 500; font-size: 13px; font-variant-numeric: tabular-nums; }
+.ctl { list-style: none; margin: 0; padding: 0; }
+.ctl li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 8px; padding-block: 7px; font-size: 14.5px; line-height: 1.4; }
+.ctl li::before { content: "\2713"; width: 18px; height: 18px; border-radius: 50%; background: var(--ok); color: #fff; display: grid; place-items: center; font-size: 11px; font-weight: 700; margin-top: 1px; }
+.ctl small { display: block; color: var(--muted); font-size: 12.5px; margin-top: 1px; }
+.ctl small b { color: var(--text); font-weight: 600; }
+.legend { font-size: 13.5px; color: var(--muted); max-width: 40em; }
+
+/* releases */
+.rel-list { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--border); margin-left: 6px; }
+.rel-item { position: relative; padding: 0 0 18px 22px; }
+.rel-item::before { content: ""; position: absolute; left: -8px; top: 7px; width: 14px; height: 14px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 3px var(--page); }
+.rel-item.note::before { background: var(--info); }
+.sec--tint .rel-item::before { box-shadow: 0 0 0 3px var(--tint); }
+.rel-item details { background: var(--page); border: 1px solid var(--border); border-radius: 10px; }
+.rel-item summary { cursor: pointer; list-style: none; padding: 12px 16px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; align-items: center; }
+.rel-item summary::-webkit-details-marker { display: none; }
+.rel-item .t { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; min-width: 0; }
+.rel-item .t h3 { font-size: 16px; }
+.rel-item .when { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.rel-item .gist { grid-column: 1 / -1; color: var(--muted); font-size: 14.5px; }
+.rel-item summary .chev { color: var(--primary); font-weight: 700; font-size: 18px; line-height: 1; }
+.rel-item details[open] .chev { transform: rotate(90deg); }
+.rel-body { padding: 0 16px 14px; border-top: 1px solid var(--border); }
+.rel-body .grp { margin-top: 12px; }
+.rel-body .grp h4 { margin: 0 0 4px; font-size: 12.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 600; }
+.rel-body ul { margin: 0; padding-left: 18px; font-size: 14.5px; }
+.rel-body li { margin-block: 3px; }
+.rel-body .meta { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--border); display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--muted); }
+.reval { font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; white-space: nowrap; }
+.reval-no { background: var(--ok-bg); color: var(--ok); }
+.reval-check { background: var(--prog-bg); color: var(--prog); }
+.reval-info { background: var(--info-bg); color: var(--info); }
+.more-rel { margin-left: 22px; }
+
+/* documents + subprocessors */
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: 32px; align-items: start; }
+.doclist { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.doclist li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-block: 9px; border-bottom: 1px solid var(--border); font-size: 15px; }
+.doclist .k { font-size: 12px; font-weight: 600; color: var(--muted); margin-right: 6px; }
+.linkbtn { font: 600 14px var(--font); color: var(--primary); background: none; border: 0; cursor: pointer; white-space: nowrap; padding: 4px 0; text-decoration: none; }
+.sub h3, .docs h3 { margin-bottom: 8px; }
+.sp { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.sp li { padding-block: 10px; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 16px; font-size: 15px; }
+.sp li strong { font-weight: 600; }
+.sp li .loc { color: var(--muted); font-size: 14px; text-align: right; }
+.sp li small { grid-column: 1 / -1; color: var(--muted); font-size: 13.5px; line-height: 1.45; }
+.fine { margin-top: 10px; font-size: 13.5px; color: var(--muted); }
+
+/* faq */
+.faq { border-top: 1px solid var(--border); max-width: 56em; }
+.faq details { border-bottom: 1px solid var(--border); padding-block: 13px; }
+.faq summary { cursor: pointer; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--primary); font-weight: 700; }
+.faq details[open] summary::after { content: "\2212"; }
+.faq details p { margin-top: 8px; color: var(--muted); font-size: 15px; }
+
+/* request dialog */
+dialog { border: 1px solid var(--border); border-radius: 14px; padding: 0; width: min(560px, calc(100vw - 32px)); background: var(--page); color: var(--text); }
+dialog::backdrop { background: rgba(10, 20, 20, .55); }
+.request { padding: 20px; display: grid; gap: 12px; }
+.request .hd { display: flex; justify-content: space-between; align-items: center; }
+.request .x { background: none; border: 0; font-size: 22px; color: var(--muted); cursor: pointer; line-height: 1; }
+.request label { font-size: 14px; font-weight: 600; display: grid; gap: 5px; }
+.request input, .request select, .request textarea { font: 400 15px var(--font); padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--page); color: var(--text); width: 100%; }
+.request .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.request .sent { color: var(--ok); font-weight: 600; font-size: 14px; }
+
+.pagefoot { background: var(--dark); color: #8FA6A6; font-size: 14px; }
+.pagefoot .wrap { padding-block: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+@media (max-width: 1000px) { .standards { grid-template-columns: repeat(3, minmax(0, 1fr)); } .areas { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 860px) { .hero, .two { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 640px) {
+  .standards { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .areas { grid-template-columns: minmax(0, 1fr); }
+  .request .row { grid-template-columns: minmax(0, 1fr); }
+  .brand small { display: none; }
+}
+@media (max-width: 400px) { .standards { grid-template-columns: minmax(0, 1fr); } }
+.note-body p { margin-top: 12px; font-size: 14.5px; }
+</style>
+</head>
+<body data-contact="https://www.calibra-genomics.com/contact">
+<!-- Generated by tools/trust/trust_page.py at release 2026-11-16; edit docs/trust/, not this file. -->
+
+<header class="top" id="top">
+  <div class="wrap">
+    <div class="top-bar">
+      <a class="brand" href="https://www.calibra-genomics.com"><span class="brand-mark" aria-hidden="true"></span>Calibra <small>Trust Center</small></a>
+      <button class="btn btn--primary" type="button" data-doc="">Request documents</button>
+    </div>
+    <div class="hero">
+      <div>
+        <h1>Your laboratory&#x27;s records, <span>protected and provable</span></h1>
+        <p class="body">We show only what we can prove. Every control below names its evidence and is checked again at each release; every release is listed with its notes.</p>
+        <div class="proof-strip"><span>Hosted in the EU</span><span>No patient identities</span><span>Every change audited</span><span>Every release recorded</span></div>
+      </div>
+      <aside class="verified" aria-label="Last verification">
+        <p class="lbl">Last verified at release</p>
+        <p class="rel">2026-11-16</p>
+        <ul><li>All test suites passed in CI</li><li>Security scans passed: images, code, secrets, dependencies</li></ul>
+        <p class="foot">A control whose evidence is missing at a release leaves this page until it is back.</p>
+      </aside>
+    </div>
+  </div>
+</header>
+
+<div class="stdstrip" id="standards"><div class="wrap standards">
+<article class="std"><h3>ISO/IEC 27001</h3><span class="badge b-prog">In progress</span><p>Security management system in operation; all 93 controls assessed.</p></article>
+<article class="std"><h3>ISO 9001</h3><span class="badge b-prog">In progress</span><p>Quality management run together with security.</p></article>
+<article class="std"><h3>GDPR</h3><span class="badge b-ok">Applies</span><p>Hosted in the EU; a data processing agreement per customer.</p></article>
+<article class="std"><h3>NIS2</h3><span class="badge b-info">Not in scope</span><p>Calibra does not qualify; we meet its Art. 21 measures within our ISO/IEC 27001 scope.</p></article>
+<article class="std"><h3>IVDR</h3><span class="badge b-info">Not a medical device</span><p>Assesses data quality; makes no diagnostic statement.</p></article>
+</div></div>
+
+<nav class="secnav" aria-label="Sections"><div class="wrap"><ul>
+  <li><a href="#controls">Controls</a></li>
+  <li><a href="#releases">Releases</a></li>
+  <li><a href="#documents">Documents and subprocessors</a></li>
+  <li><a href="#questions">Questions</a></li>
+</ul></div></nav>
+
+<main>
+<section id="controls" class="sec"><div class="wrap">
+  <div class="sec-head">
+    <div><p class="eyebrow">Controls</p><h2>What is in place today</h2></div>
+    <p class="legend"><b>Test</b>: runs before every change reaches our servers. <b>Scan</b>: must pass before a release. <b>Document</b>: controlled, available on request.</p>
+  </div>
+  <div class="areas">
+<div class="area"><h3>Product <small>5</small></h3><ul class="ctl"><li><span>Each laboratory&#x27;s data kept apart<small><b>Test</b> on every address · every change</small></span></li><li><span>Every change recorded in an audit trail<small><b>Test</b> fails if a route records nothing · every change</small></span></li><li><span>Strong passwords, limited log-in attempts<small><b>Tests</b> every change</small></span></li><li><span>Secrets encrypted, keys stored only as hashes<small><b>Tests</b> every change</small></span></li><li><span>Sample names masked before they leave your laboratory<small><b>Data Agent</b> on by default</small></span></li></ul></div>
+<div class="area"><h3>Infrastructure <small>4</small></h3><ul class="ctl"><li><span>HTTPS with strict security headers<small><b>Server check</b> grade A or better · every update</small></span></li><li><span>Images and configuration scanned<small><b>Scan</b> no High or Critical open · every release</small></span></li><li><span>Web app and every API route tested for attacks<small><b>Scan</b> every release</small></span></li><li><span>Backup of database and files before each update<small><b>Update script</b> every update</small></span></li></ul></div>
+<div class="area"><h3>Development <small>4</small></h3><ul class="ctl"><li><span>All test suites green before a release<small><b>CI</b> every release</small></span></li><li><span>Code checked by static security analysis<small><b>Scan</b> every release</small></span></li><li><span>Dependencies pinned and audited<small><b>Scan</b> every release</small></span></li><li><span>Every feature&#x27;s tests named in its specification<small><b>Check</b> fails on a missing test</small></span></li></ul></div>
+<div class="area"><h3>Data and privacy <small>3</small></h3><ul class="ctl"><li><span>No patient identities, variant calls or clinical results<small><b>Design</b> reference materials only</small></span></li><li><span>Calibra AI off until your laboratory turns it on<small><b>Tests</b> sends configuration facts only</small></span></li><li><span>Accounts and laboratories deletable with their data<small><b>Tests</b> </small></span></li></ul></div>
+<div class="area"><h3>Releases <small>3</small></h3><ul class="ctl"><li><span>A written record of every release<small><b>Release record</b> every release</small></span></li><li><span>Customer impact assessed before each release<small><b>Procedure</b> every release</small></span></li><li><span>Changes that may need revalidation announced<small><b>Release notes</b> below</small></span></li></ul></div>
+  </div>
+</div></section>
+
+<section id="releases" class="sec sec--tint"><div class="wrap">
+  <div class="sec-head"><div><p class="eyebrow">Releases</p><h2>Every release, with its notes</h2>
+    <p class="lead">Each release says whether a laboratory may need to revalidate. Open one for its notes.</p></div></div>
+  <ol class="rel-list">
+<li class="rel-item"><details open><summary><span class="t"><h3>2026-11-16</h3><span class="when">16 Nov 2026</span><span class="reval reval-check">Check your plans</span></span><span class="chev" aria-hidden="true">&rsaquo;</span><span class="gist">Validation studies carried out day by day in Calibra, a redesigned workflow and plan workspace, Calibra AI on every page, and a user manual in Help.</span></summary><div class="rel-body"><div class="grp"><h4>New</h4><ul><li>Validation studies run day by day: study days opened one after another, a Day 1 checkpoint before the rest, runs with their flow cells matched to Calibra Monitor, operators, deviations and the lots from the workflow&#x27;s logbook.</li><li>Placement for each study run: which barcode well, capture pool and lane each library takes, around your other samples, with a preparation sheet and placement to download as CSV or Excel.</li><li>Short codes for samples and libraries, from your laboratory&#x27;s own pattern, chosen when a study starts.</li><li>Pilot study: a light first round of a draft plan to set the accuracy cut-offs, and Suggest cut-offs that uses its results.</li><li>Calibra AI assistant: ask about your plans, studies and workflows, or how Calibra works, from Help › Ask Calibra AI on every page (when your laboratory turns it on).</li><li>User manual in Help, covering the whole app, with links from the screens.</li><li>Sequencer load on a plan&#x27;s step 3: the load your laboratory sets beside the capacity Calibra calculates from the flow cell&#x27;s output, and what the difference means.</li><li>Workflows, plans and studies can be cloned, and deleted while nothing depends on them.</li><li>Appearance: Light, Dark or your device&#x27;s setting, in the account menu.</li><li>Trust center: our security and quality status and every release, at trust.calibra-genomics.com.</li></ul></div><div class="grp"><h4>Changed</h4><ul><li>The top bar: Monitor, Validate and Connect are links, your laboratory&#x27;s name opens its Dashboard, and one Help menu holds the manual, glossary, videos, Calibra AI and support.</li><li>Workflow pages redesigned: the configuration in Components, Steps and Checks, components added with their first record, and the Overview edited in place.</li><li>A plan opens as a workspace with one menu on the left; what describes the test (sequencer load, library prep details) moves to the workflow and the Component Library.</li><li>Plans hold no calendar dates any more: the study holds the days, runs and datasets.</li><li>Sequencers found by a Data Agent are no longer added by themselves: a person adds them or matches them with one in the Component Library, history included.</li><li>Laboratories import reference materials from the Global Library; GIAB truth sets are downloaded for you.</li></ul></div><div class="grp"><h4>Improved</h4><ul><li>Disabled buttons say why, and actions that remove something ask first.</li><li>Screens refresh what an action changes, and failed actions say so.</li><li>Laboratories working under the IVDR see their own terms where CAP wording was fixed before.</li><li>One colour per reference material on every screen.</li></ul></div><div class="grp"><h4>Fixed</h4><ul><li>A study&#x27;s Runs and Operators tabs no longer fail when two members share a name.</li><li>The study form offers every run of the workflow, not only the newest ones.</li></ul></div><div class="grp"><h4>Security</h4><ul><li>Each release&#x27;s components and lock files are recorded, and a dependency with a published vulnerability was updated.</li><li>Pages for the Calibra Team answer &quot;not found&quot; to anyone else.</li></ul></div><div class="grp"><h4>What to do</h4><ul><li>Approved plans and decided studies are not changed.</li><li>Draft plans are worked out again with the new planner (sequencer load, barcodes kept per reference): check a draft&#x27;s design on step 3 before you submit it.</li><li>Check each sequencer&#x27;s flow cell output and samples per flow cell or lane in the Component Library and the workflow configuration: the plan&#x27;s sequencer load and capacity come from them.</li></ul></div><p class="meta"><span>193 changes</span><span>25 database changes, applied during the update</span><span>No downtime</span></p></div></details></li>
+<li class="rel-item"><details><summary><span class="t"><h3>2026-11-09-3</h3><span class="when">9 Nov 2026</span><span class="reval reval-no">No revalidation needed</span></span><span class="chev" aria-hidden="true">&rsaquo;</span><span class="gist">The Calibra Genomics logo in the app; more security checks in every release.</span></summary><div class="rel-body"><div class="grp"><h4>New</h4><ul><li>The Calibra Genomics logo in the top bar, on the log-in and sign-up pages and in the footer.</li></ul></div><div class="grp"><h4>Security</h4><ul><li>Static code analysis and a vulnerability scan of every server image now run on every release.</li><li>Each release is tagged automatically, so the version on the server can always be traced to its record.</li></ul></div><p class="meta"><span>21 changes</span><span>No database changes</span><span>No downtime</span></p></div></details></li>
+<li class="rel-item"><details><summary><span class="t"><h3>2026-11-09-2</h3><span class="when">9 Nov 2026</span><span class="reval reval-no">No revalidation needed</span></span><span class="chev" aria-hidden="true">&rsaquo;</span><span class="gist">Long alert histories load faster.</span></summary><div class="rel-body"><div class="grp"><h4>Improved</h4><ul><li>Alert history loads 200 at a time, with Show more on the Alerts screen.</li></ul></div><div class="grp"><h4>Fixed</h4><ul><li>A connection setting that could stop customer records from reaching our account system.</li></ul></div><p class="meta"><span>13 changes</span><span>No database changes</span><span>No downtime</span></p></div></details></li>
+<li class="rel-item"><details><summary><span class="t"><h3>2026-11-09</h3><span class="when">9 Nov 2026</span><span class="reval reval-no">No revalidation needed</span></span><span class="chev" aria-hidden="true">&rsaquo;</span><span class="gist">How-to videos in Help, clearer plan switches, and security scans in every release.</span></summary><div class="rel-body"><div class="grp"><h4>New</h4><ul><li>Help › Videos: short how-to videos for getting started, the Data Agent and validating a workflow.</li><li>Switching to another plan takes effect when the paid period ends, and the Subscription tab shows what comes next.</li></ul></div><div class="grp"><h4>Fixed</h4><ul><li>Files with accented names download correctly; .GZ files no longer get a second extension.</li></ul></div><div class="grp"><h4>Security</h4><ul><li>Images, configuration and the web app are scanned before every release; the server is checked after every update.</li><li>Strict security headers; database moved to MySQL 8.4 LTS.</li></ul></div><p class="meta"><span>43 changes</span><span>1 database change, applied during the update</span><span>No downtime</span></p></div></details></li>
+<li class="rel-item note"><details><summary><span class="t"><h3>Security notice</h3><span class="when">8 Nov 2026</span><span class="reval reval-info">No action needed</span></span><span class="chev" aria-hidden="true">&rsaquo;</span><span class="gist">Security scans and headers added to every release</span></summary><div class="rel-body note-body"><p>The first full security scan found missing security headers on the server and outdated packages in two images. All were fixed in release 2026-11-09. No data was exposed.</p></div></details></li>
+<li class="rel-item"><details><summary><span class="t"><h3>2026-11-07</h3><span class="when">7 Nov 2026</span><span class="reval reval-no">No revalidation needed</span></span><span class="chev" aria-hidden="true">&rsaquo;</span><span class="gist">Free trial and subscriptions, invitation codes, and AI help for workflow descriptions.</span></summary><div class="rel-body"><div class="grp"><h4>New</h4><ul><li>A free trial for each approved laboratory, then a subscription with invoices.</li><li>Invitation codes from the Calibra Team open the sign-up.</li><li>Calibra AI can draft a workflow description, only if your laboratory turns it on.</li><li>A validation plan&#x27;s General Details follow the plan document, section by section.</li></ul></div><div class="grp"><h4>Changed</h4><ul><li>When the Terms of Use or Privacy Policy change, every user accepts the new version before continuing.</li></ul></div><p class="meta"><span>73 changes</span><span>11 database changes, applied during the update</span><span>No downtime</span></p></div></details></li>
+<li class="rel-item" data-older hidden><details><summary><span class="t"><h3>2026-11-04</h3><span class="when">4 Nov 2026</span><span class="reval reval-check">Check your plans</span></span><span class="chev" aria-hidden="true">&rsaquo;</span><span class="gist">Comparison Rules that follow GA4GH counting; a fix to indel counts on recount.</span></summary><div class="rel-body"><div class="grp"><h4>Changed</h4><ul><li>Comparisons count one result per VCF record, as GA4GH does, and indels starting in the target by default.</li><li>A validation plan can be exported as a PDF.</li></ul></div><div class="grp"><h4>Fixed</h4><ul><li>Recounting the same target a second time could miss indels starting in it.</li></ul></div><div class="grp"><h4>What to do</h4><ul><li>Accuracy figures of studies compared before this release may differ when compared again. Compare them again before approving a plan.</li></ul></div><p class="meta"><span>54 changes</span><span>2 database changes, applied during the update</span><span>No downtime</span></p></div></details></li>
+<li class="rel-item" data-older hidden><details><summary><span class="t"><h3>2026-11-01</h3><span class="when">1 Nov 2026</span><span class="reval reval-no">No revalidation needed</span></span><span class="chev" aria-hidden="true">&rsaquo;</span><span class="gist">The first release with a written release record.</span></summary><div class="rel-body"><div class="grp"><h4>Security</h4><ul><li>Laboratory isolation tested on every address.</li></ul></div><p class="meta"><span>32 changes</span><span>No database changes</span><span>No downtime</span></p></div></details></li>
+  </ol>
+  <button class="linkbtn more-rel" type="button" id="more-rel">Show all releases</button>
+</div></section>
+
+<section id="documents" class="sec"><div class="wrap"><div class="two">
+  <div class="docs">
+    <p class="eyebrow">Documents</p>
+    <h2>For your supplier file</h2>
+    <ul class="doclist">
+<li><span><span class="k">Public</span>Privacy Policy</span><a class="linkbtn" href="https://www.calibra-genomics.com/privacy">Open</a></li>
+<li><span><span class="k">Public</span>Terms of Use</span><a class="linkbtn" href="https://www.calibra-genomics.com/terms">Open</a></li>
+<li><span>Information Security Policy</span><button class="linkbtn" type="button" data-doc="Information Security Policy">Request</button></li>
+<li><span>Statement of Applicability</span><button class="linkbtn" type="button" data-doc="Statement of Applicability">Request</button></li>
+<li><span>Data processing agreement</span><button class="linkbtn" type="button" data-doc="Data processing agreement">Request</button></li>
+<li><span>NIS2 measures mapping</span><button class="linkbtn" type="button" data-doc="NIS2 measures mapping">Request</button></li>
+<li><span>Security questionnaire answers</span><button class="linkbtn" type="button" data-doc="Security questionnaire answers">Request</button></li>
+    </ul>
+    <p class="fine">Requested documents are sent within 2 working days.</p>
+  </div>
+  <div class="sub">
+    <p class="eyebrow">Subprocessors</p>
+    <h2>Who else handles your data</h2>
+    <ul class="sp">
+<li><strong>INTERNET CZ, a.s.</strong><span class="loc">Italy (EU)</span><small>Hosting of Calibra App, its database and files: all Calibra App data.</small></li>
+<li><strong>HubSpot</strong><span class="loc">EU</span><small>Customer accounts, subscriptions, invoices: names, work emails, billing details. Never laboratory records.</small></li>
+<li><strong>INTERNET CZ, a.s. (FORPSI email)</strong><span class="loc">EU</span><small>Account, invitation and alert emails (smtp.forpsi.com): names, email addresses, alert content.</small></li>
+<li><strong>OpenRouter</strong><span class="loc">USA</span><small>Calibra AI, only if your laboratory turns it on: workflow configuration facts. No names, sample identifiers or patient data.</small></li>
+    </ul>
+    <p class="fine">We tell customers before adding a subprocessor.</p>
+  </div>
+</div></div></section>
+
+<section id="questions" class="sec sec--tint"><div class="wrap">
+  <div class="sec-head"><div><p class="eyebrow">Questions</p><h2>What laboratories ask us</h2></div></div>
+  <div class="faq"><details><summary>Is Calibra certified to ISO/IEC 27001 or ISO 9001?</summary><p>Not yet. We run the management system both standards require as part of our daily work; certification follows an internal audit and a management review. The certification body will be named here.</p></details><details><summary>Is Calibra subject to NIS2?</summary><p>No. Calibra Genomics does not qualify under NIS2 or the Czech Cybersecurity Act that implements it (Act No. 264/2025 Coll.): it applies to medium-sized and larger organizations. We meet its Art. 21 security measures anyway, within the scope of our ISO/IEC 27001 management system, so laboratories regulated under NIS2 can include us in their supplier assessment.</p></details><details><summary>Do you hold patient data?</summary><p>No patient names, identifiers, variant calls or clinical results. Calibra processes technical QC metrics under sample codes your laboratory controls, under a data processing agreement.</p></details><details><summary>What happens if there is a security incident?</summary><p>We follow a written incident procedure and tell the laboratories affected what happened, what it touched and what to do. Personal data breaches are reported to the authority within 72 hours where required.</p></details></div>
+</div></section>
+</main>
+
+<footer class="pagefoot"><div class="wrap"><span>Calibra Genomics s.r.o., Czech Republic</span><span>Generated from our registers and release records at release 2026-11-16</span></div></footer>
+
+<script>
+(function () {
+  var dlg = document.getElementById('req');
+  var contact = document.body.getAttribute('data-contact');
+  document.querySelectorAll('[data-doc]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      if (dlg && dlg.showModal) { dlg.showModal(); return; }
+      window.location.href = contact;
+    });
+  });
+  var close = document.getElementById('req-close');
+  if (close) close.addEventListener('click', function () { dlg.close(); });
+  var more = document.getElementById('more-rel');
+  if (more) more.addEventListener('click', function () {
+    document.querySelectorAll('[data-older]').forEach(function (el) { el.hidden = false; });
+    more.hidden = true;
+  });
+})();
+</script>
+</body>
+</html>
