@@ -110,7 +110,6 @@ section { scroll-margin-top: 56px; }
 .ctl li::before { content: "\2713"; width: 18px; height: 18px; border-radius: 50%; background: var(--ok); color: #fff; display: grid; place-items: center; font-size: 11px; font-weight: 700; margin-top: 1px; }
 .ctl small { display: block; color: var(--muted); font-size: 12.5px; margin-top: 1px; }
 .ctl small b { color: var(--text); font-weight: 600; }
-.legend { font-size: 13.5px; color: var(--muted); max-width: 40em; }
 
 /* releases */
 .rel-list { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--border); margin-left: 6px; }
@@ -198,8 +197,8 @@ dialog::backdrop { background: rgba(10, 20, 20, .55); }
 </a>
       <span class="brand-label">Trust Center</span>
       <nav class="top-actions" aria-label="Calibra">
-        <a class="btn btn--ondark" href="https://www.calibra-genomics.com">Calibra website</a>
-        <a class="btn btn--ondark" href="https://app.calibra-genomics.com/login">Log in to Calibra</a>
+        <a class="btn btn--ondark" href="https://www.calibra-genomics.com" target="_blank" rel="noopener">Calibra website</a>
+        <a class="btn btn--ondark" href="https://app.calibra-genomics.com/login" target="_blank" rel="noopener">Log in to Calibra</a>
         <button class="btn btn--primary" type="button" data-doc="">Request documents</button>
       </nav>
     </div>
@@ -238,7 +237,6 @@ dialog::backdrop { background: rgba(10, 20, 20, .55); }
 <section id="controls" class="sec"><div class="wrap">
   <div class="sec-head">
     <div><p class="eyebrow">Controls</p><h2>What is in place today</h2></div>
-    <p class="legend"><b>Test</b>: runs before every change reaches our servers. <b>Scan</b>: must pass before a release. <b>Document</b>: controlled, available on request.</p>
   </div>
   <div class="areas">
 <div class="area"><h3>Product <small>5</small></h3><ul class="ctl"><li><span>Each laboratory&#x27;s data kept apart<small><b>Test</b> on every address · every change</small></span></li><li><span>Every change recorded in an audit trail<small><b>Test</b> fails if a route records nothing · every change</small></span></li><li><span>Strong passwords, limited log-in attempts<small><b>Tests</b> every change</small></span></li><li><span>Secrets encrypted, keys stored only as hashes<small><b>Tests</b> every change</small></span></li><li><span>Sample names masked before they leave your laboratory<small><b>Data Agent</b> on by default</small></span></li></ul></div>
